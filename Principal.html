@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Principal Login</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Inter', sans-serif;
+    background:#f4f8fc;
+}
+
+.navbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 8%;
+    background:white;
+    box-shadow:0 4px 15px rgba(0,0,0,0.05);
+}
+
+.logo{
+    font-family:'Poppins', sans-serif;
+    font-size:20px;
+    color:#1E88E5;
+}
+
+nav a{
+    margin-left:25px;
+    text-decoration:none;
+    color:#333;
+    font-weight:500;
+}
+
+.login-container{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:85vh;
+}
+
+.login-box{
+    background:white;
+    padding:40px;
+    width:350px;
+    border-radius:12px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.08);
+}
+
+.login-box h2{
+    font-family:'Poppins', sans-serif;
+    text-align:center;
+    color:#1E88E5;
+    margin-bottom:25px;
+}
+
+input{
+    width:100%;
+    padding:12px;
+    margin-bottom:15px;
+    border-radius:8px;
+    border:1px solid #ccc;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    border:none;
+    background:#1E88E5;
+    color:white;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#1565C0;
+}
+
+</style>
+</head>
+
+<body>
+
+<header class="navbar">
+    <div class="logo">Fr.Conceicao Rodrigues College of Engineering</div>
+    <nav>
+        <a href="student.html">Home</a>
+        <a href="login.html">Faculty Login</a>
+        <a href="HOD.html">HOD Login</a>
+    </nav>
+</header>
+
+<div class="login-container">
+    <div class="login-box">
+        <h2>Principal Login</h2>
+        <form id="loginForm" onsubmit="return false;">
+            <input type="text" id="emailInput" placeholder="Email (principal@example.com)" required>
+            <input type="password" id="passwordInput" placeholder="Password (principal123)" required>
+            <button type="button" onclick="loginUser('principal')">Login</button>
+        </form>
+    </div>
+</div>
+
+<script src="script.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const loginForm = document.getElementById('loginForm');
+    if (loginForm) {
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            loginUser('principal');
+        });
+    }
+});
+</script>
+
+</body>
+</html>

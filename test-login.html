@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login Diagnostic Test</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Inter', sans-serif;
+    background:linear-gradient(135deg,#1E88E5,#1565C0);
+    min-height:100vh;
+    padding:40px 20px;
+}
+
+.container{
+    max-width:600px;
+    margin:auto;
+    background:white;
+    padding:40px;
+    border-radius:12px;
+    box-shadow:0 15px 35px rgba(0,0,0,0.2);
+}
+
+h1{
+    color:#1E88E5;
+    margin-bottom:30px;
+    text-align:center;
+}
+
+.credentials-section{
+    background:#f4f8fc;
+    padding:20px;
+    border-radius:8px;
+    margin-bottom:30px;
+}
+
+.credentials-section h2{
+    color:#1E88E5;
+    font-size:18px;
+    margin-bottom:15px;
+}
+
+.credential-item{
+    background:white;
+    padding:15px;
+    border-radius:6px;
+    margin-bottom:10px;
+    border-left:4px solid #1E88E5;
+}
+
+.credential-item strong{
+    color:#1E88E5;
+    display:block;
+    margin-bottom:5px;
+}
+
+.credential-item code{
+    background:#f0f0f0;
+    padding:5px 10px;
+    border-radius:4px;
+    font-family:monospace;
+    color:#333;
+}
+
+.test-section{
+    margin-top:30px;
+}
+
+.test-section h2{
+    color:#1E88E5;
+    font-size:18px;
+    margin-bottom:15px;
+}
+
+.test-group{
+    background:#f4f8fc;
+    padding:20px;
+    border-radius:8px;
+    margin-bottom:15px;
+}
+
+.test-group label{
+    display:block;
+    margin-bottom:10px;
+    font-weight:600;
+}
+
+input{
+    width:100%;
+    padding:10px;
+    margin-bottom:10px;
+    border:1px solid #ccc;
+    border-radius:6px;
+    font-family:'Inter', sans-serif;
+}
+
+button{
+    background:#1E88E5;
+    color:white;
+    padding:10px 20px;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+    font-weight:600;
+    margin-right:10px;
+    margin-top:10px;
+}
+
+button:hover{
+    background:#1565C0;
+}
+
+.success{
+    color:#43a047;
+    font-weight:600;
+}
+
+.error{
+    color:#e53935;
+    font-weight:600;
+}
+
+.output{
+    background:#f9f9f9;
+    padding:15px;
+    border-radius:6px;
+    border:1px solid #ddd;
+    margin-top:10px;
+    max-height:200px;
+    overflow-y:auto;
+    font-family:monospace;
+    font-size:12px;
+}
+
+.nav-back{
+    text-align:center;
+    margin-top:30px;
+}
+
+.nav-back a{
+    color:#1E88E5;
+    text-decoration:none;
+    font-weight:600;
+}
+
+.nav-back a:hover{
+    text-decoration:underline;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>🔐 Login System Diagnostic</h1>
+
+    <div class="credentials-section">
+        <h2>Available Login Credentials</h2>
+        
+        <div class="credential-item">
+            <strong>👨‍🎓 Student</strong>
+            Email: <code>student@example.com</code><br>
+            Password: <code>student123</code>
+        </div>
+
+        <div class="credential-item">
+            <strong>👨‍🎓 Student (Alternative)</strong>
+            Email: <code>john@example.com</code><br>
+            Password: <code>pass123</code>
+        </div>
+
+        <div class="credential-item">
+            <strong>👨‍🏫 Faculty</strong>
+            Email: <code>faculty@example.com</code><br>
+            Password: <code>faculty123</code>
+        </div>
+
+        <div class="credential-item">
+            <strong>👔 HOD</strong>
+            Email: <code>hod@example.com</code><br>
+            Password: <code>hod123</code>
+        </div>
+
+        <div class="credential-item">
+            <strong>👨‍💼 Principal</strong>
+            Email: <code>principal@example.com</code><br>
+            Password: <code>principal123</code>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>🧪 Test Login Function</h2>
+
+        <div class="test-group">
+            <label>Test Credentials Checker</label>
+            <input type="text" id="testEmail" placeholder="Enter email">
+            <input type="password" id="testPassword" placeholder="Enter password">
+            <button onclick="checkCredentials()">Check Credentials</button>
+            <div id="testOutput" class="output" style="display:none;"></div>
+        </div>
+
+        <div class="test-group">
+            <label>Quick Login Test</label>
+            <button onclick="quickTestHOD()">Test HOD Login</button>
+            <button onclick="quickTestFaculty()">Test Faculty Login</button>
+            <button onclick="quickTestPrincipal()">Test Principal Login</button>
+            <button onclick="quickTestStudent()">Test Student Login</button>
+        </div>
+
+        <div class="test-group">
+            <label>Check Console (F12)</label>
+            <button onclick="checkScriptLoaded()">Check if script.js Loaded</button>
+            <button onclick="showCredentials()">Show All Credentials</button>
+            <div id="debugOutput" class="output"></div>
+        </div>
+    </div>
+
+    <div class="nav-back">
+        <a href="index.html">← Back to Home</a>
+    </div>
+</div>
+
+<script>
+function checkCredentials() {
+    const email = document.getElementById('testEmail').value.trim();
+    const password = document.getElementById('testPassword').value.trim();
+    const output = document.getElementById('testOutput');
+    
+    if (!email || !password) {
+        output.innerHTML = '<span class="error">❌ Please enter both email and password</span>';
+        output.style.display = 'block';
+        return;
+    }
+
+    // Check if credentials object exists
+    if (typeof credentials === 'undefined') {
+        output.innerHTML = '<span class="error">❌ Script not loaded properly. Reload the page.</span>';
+        output.style.display = 'block';
+        return;
+    }
+
+    let found = false;
+    let matchRole = '';
+
+    for (let role in credentials) {
+        const creds = credentials[role];
+        for (let cred of creds) {
+            if (cred.email === email && cred.password === password) {
+                found = true;
+                matchRole = role;
+                break;
+            }
+        }
+        if (found) break;
+    }
+
+    if (found) {
+        output.innerHTML = `<span class="success">✅ VALID CREDENTIALS</span><br>Role: ${matchRole.toUpperCase()}`;
+    } else {
+        output.innerHTML = `<span class="error">❌ INVALID CREDENTIALS</span><br>Check your email and password`;
+    }
+    output.style.display = 'block';
+}
+
+function checkScriptLoaded() {
+    const output = document.getElementById('debugOutput');
+    
+    if (typeof credentials === 'undefined') {
+        output.textContent = '❌ script.js NOT loaded\n⚠️ script.js or credentials object missing';
+    } else {
+        output.textContent = '✅ script.js is loaded\n✅ credentials object found\n\nAvailable roles:\n' + Object.keys(credentials).join(', ');
+    }
+}
+
+function showCredentials() {
+    const output = document.getElementById('debugOutput');
+    
+    if (typeof credentials === 'undefined') {
+        output.textContent = '❌ credentials not found';
+        return;
+    }
+
+    let text = 'Current Credentials in Memory:\n\n';
+    for (let role in credentials) {
+        text += `${role.toUpperCase()}:\n`;
+        credentials[role].forEach(cred => {
+            text += `  ${cred.email} / ${cred.password}\n`;
+        });
+        text += '\n';
+    }
+    output.textContent = text;
+}
+
+function quickTestHOD() {
+    document.getElementById('testEmail').value = 'hod@example.com';
+    document.getElementById('testPassword').value = 'hod123';
+    checkCredentials();
+}
+
+function quickTestFaculty() {
+    document.getElementById('testEmail').value = 'faculty@example.com';
+    document.getElementById('testPassword').value = 'faculty123';
+    checkCredentials();
+}
+
+function quickTestPrincipal() {
+    document.getElementById('testEmail').value = 'principal@example.com';
+    document.getElementById('testPassword').value = 'principal123';
+    checkCredentials();
+}
+
+function quickTestStudent() {
+    document.getElementById('testEmail').value = 'student@example.com';
+    document.getElementById('testPassword').value = 'student123';
+    checkCredentials();
+}
+
+// Auto-check on page load
+window.addEventListener('load', function() {
+    checkScriptLoaded();
+});
+</script>
+
+</body>
+</html>

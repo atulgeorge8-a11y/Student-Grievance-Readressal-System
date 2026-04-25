@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login - Student Grievance System</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Inter', sans-serif;
+    background:linear-gradient(135deg,#1E88E5,#1565C0);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+.login-card{
+    background:white;
+    padding:40px;
+    width:350px;
+    border-radius:12px;
+    box-shadow:0 15px 35px rgba(0,0,0,0.15);
+    text-align:center;
+}
+
+.login-card h2{
+    font-family:'Poppins', sans-serif;
+    margin-bottom:20px;
+    color:#1E88E5;
+}
+
+input{
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    border-radius:8px;
+    border:1px solid #ccc;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    background:#1E88E5;
+    color:white;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:500;
+    margin-top:10px;
+    transition:0.3s;
+}
+
+button:hover{
+    background:#1565C0;
+}
+
+.extra-links{
+    margin-top:15px;
+    font-size:14px;
+}
+
+.extra-links a{
+    text-decoration:none;
+    color:#1E88E5;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="login-card">
+    <h2>Faculty Login</h2>
+    <form id="loginForm" onsubmit="return false;">
+        <select id="emailInput" required style="width:100%; padding:12px; margin:10px 0; border-radius:8px; border:1px solid #ccc; font-family:inherit;">
+            <option value="" disabled selected>Select Your Assigned Category</option>
+            <option value="academic@faculty.com">Academic</option>
+            <option value="hostel@faculty.com">Hostel</option>
+            <option value="exam@faculty.com">Exam</option>
+            <option value="infrastructure@faculty.com">Infrastructure</option>
+            <option value="harassment@faculty.com">Harassment</option>
+            <option value="general@faculty.com">Other / General</option>
+        </select>
+        <input type="password" id="passwordInput" placeholder="Password (e.g. pass123)" required>
+        <button type="button" onclick="loginUser('faculty')">Login</button>
+    </form>
+    <div class="extra-links">
+        <p><a href="#">Forgot Password?</a></p>
+        <p>New user? <a href="login.html">Register</a></p>
+    </div>
+</div>
+
+<script src="script.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const loginForm = document.getElementById('loginForm');
+    if (loginForm) {
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            loginUser('faculty');
+        });
+    }
+});
+</script>
+
+</body>
+</html>

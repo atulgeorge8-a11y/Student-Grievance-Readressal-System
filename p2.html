@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Password Validation</title>
+<script>
+function validatePassword(){
+var p=document.getElementById("pass").value;
+var pattern=/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
+if(pattern.test(p)){
+document.getElementById("msg").innerHTML="Valid Password";
+}else{
+document.getElementById("msg").innerHTML="Invalid Password";
+}
+}
+</script>
+</head>
+<body>
+<form>
+Password: <input type="password" id="pass">
+<button type="button" onclick="validatePassword()">Check</button>
+<p id="msg"></p>
+</form>
+</body>
+</html>

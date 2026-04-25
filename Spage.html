@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Dashboard</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Inter', sans-serif;
+    background:#f4f8fc;
+    color:#333;
+}
+
+/* NAVBAR */
+.navbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 8%;
+    background:white;
+    box-shadow:0 4px 15px rgba(0,0,0,0.05);
+}
+
+.logo{
+    font-family:'Poppins', sans-serif;
+    font-size:20px;
+    color:#1E88E5;
+}
+
+nav a{
+    margin-left:25px;
+    text-decoration:none;
+    color:#333;
+    font-weight:500;
+    transition:0.3s;
+}
+
+nav a:hover{
+    color:#1E88E5;
+}
+
+/* WELCOME SECTION */
+.welcome{
+    padding:40px 8%;
+}
+
+.welcome h2{
+    font-family:'Poppins', sans-serif;
+    color:#1E88E5;
+}
+
+/* STATUS CARDS */
+.status-section{
+    padding:20px 8%;
+}
+
+.status-cards{
+    display:flex;
+    gap:20px;
+    flex-wrap:wrap;
+}
+
+.card{
+    flex:1;
+    min-width:200px;
+    padding:25px;
+    border-radius:12px;
+    color:white;
+    font-weight:600;
+    box-shadow:0 8px 20px rgba(0,0,0,0.05);
+}
+
+.pending{ background:#e53935; }
+.progress{ background:#fb8c00; }
+.resolved{ background:#43a047; }
+
+/* TABLE SECTION */
+.table-section{
+    padding:40px 8%;
+}
+
+.table-section h3{
+    font-family:'Poppins', sans-serif;
+    margin-bottom:20px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    background:white;
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:0 10px 25px rgba(0,0,0,0.05);
+}
+
+th, td{
+    padding:15px;
+    text-align:center;
+}
+
+th{
+    background:#1E88E5;
+    color:white;
+}
+
+tr:nth-child(even){
+    background:#f2f6fc;
+}
+
+/* BUTTON */
+.btn{
+    padding:6px 12px;
+    background:#1E88E5;
+    color:white;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+.btn:hover{
+    background:#1565C0;
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+    nav{
+        display:none;
+    }
+
+    .status-cards{
+        flex-direction:column;
+    }
+
+    table{
+        font-size:14px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<header class="navbar">
+    <div class="logo">Fr.Coneicao Rodrigues College of Engineering</div>
+    <nav>
+        <a href="student.html">Home</a>
+        <a href="submiit.html">Submit Grievance</a>
+        <a href="track.html">Track Grievance</a>
+        <a href="#" onclick="logout(); return false;">Logout</a>
+    </nav>
+</header>
+
+<!-- WELCOME -->
+<section class="welcome">
+    <h2>Welcome to Your Dashboard 👋</h2>
+    <p>Here you can view and track your submitted grievances.</p>
+</section>
+
+<!-- QUICK ACTIONS -->
+<section class="status-section">
+    <div class="status-cards">
+        <a href="submiit.html" class="btn" style="padding:15px 30px; text-decoration:none; background:#1E88E5; color:white; border-radius:8px; display:inline-block; margin:5px;">📝 Submit New Grievance</a>
+        <a href="track.html" class="btn" style="padding:15px 30px; text-decoration:none; background:#1E88E5; color:white; border-radius:8px; display:inline-block; margin:5px;">🔍 Track Grievance</a>
+    </div>
+</section>
+
+<!-- TABLE -->
+<section class="table-section">
+    <h3>Your Grievances</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Grievance ID</th>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Status</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="5" style="text-align:center; padding:20px;">Loading...</td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+<script src="script.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const currentUser = getCurrentUser();
+    if (!currentUser) {
+        alert('Please login first');
+        window.location.href = 'student.html';
+        return;
+    }
+    
+    // Update welcome message
+    const welcome = document.querySelector('.welcome h2');
+    if (welcome) {
+        welcome.textContent = `Welcome to Your Dashboard 👋`;
+    }
+    
+    // Display grievances
+    displayStudentGrievances();
+});
+</script>
+
+</body>
+</html>

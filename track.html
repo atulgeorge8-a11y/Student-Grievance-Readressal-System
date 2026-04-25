@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Track Grievance</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Inter', sans-serif;
+    background:linear-gradient(135deg, #f0f4f8, #e2e8f0);
+    color:#333;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* NAVBAR */
+.navbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 8%;
+    background:white;
+    box-shadow:0 10px 30px rgba(0,0,0,0.05);
+    position:sticky;
+    top:0;
+    z-index: 100;
+}
+
+.logo{
+    font-family:'Poppins', sans-serif;
+    font-size:20px;
+    color:#1E88E5;
+    font-weight: 600;
+}
+
+nav a{
+    margin-left:25px;
+    text-decoration:none;
+    color:#555;
+    font-weight:500;
+    transition:0.3s;
+}
+
+nav a:hover{
+    color:#1E88E5;
+}
+
+/* TRACK SECTION */
+.track-section{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding:80px 5%;
+    text-align:center;
+}
+
+.track-header {
+    margin-bottom: 40px;
+}
+
+.track-header h2{
+    font-family:'Poppins', sans-serif;
+    font-size: 36px;
+    margin-bottom:10px;
+    color:#1E88E5;
+}
+
+.track-header p {
+    color: #666;
+    font-size: 16px;
+    max-width: 500px;
+    margin: auto;
+}
+
+.track-box{
+    width: 100%;
+    max-width:550px;
+    background:white;
+    padding:40px;
+    border-radius:16px;
+    box-shadow:0 20px 40px rgba(0,0,0,0.08);
+    position: relative;
+    overflow: hidden;
+}
+
+.track-box::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 6px;
+    background: linear-gradient(90deg, #1E88E5, #42A5F5);
+}
+
+input{
+    width:100%;
+    padding:16px;
+    border-radius:10px;
+    border:2px solid #e0e0e0;
+    background: #f9f9f9;
+    margin-bottom:20px;
+    font-family:'Inter', sans-serif;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+input:focus {
+    border-color: #1E88E5;
+    background: white;
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(30, 136, 229, 0.1);
+}
+
+button{
+    width:100%;
+    padding:16px;
+    background:linear-gradient(135deg, #1E88E5, #1565C0);
+    color:white;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:600;
+    font-size: 16px;
+    letter-spacing: 0.5px;
+    transition:all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(30, 136, 229, 0.3);
+}
+
+button:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(30, 136, 229, 0.4);
+}
+
+/* FOOTER */
+footer{
+    background:white;
+    color:#666;
+    text-align:center;
+    padding:25px;
+    border-top: 1px solid #eee;
+    font-size: 14px;
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+    nav{
+        display:none;
+    }
+    .track-header h2 {
+        font-size: 28px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<header class="navbar">
+    <div class="logo">🎓 FRCRCE Grievance Portal</div>
+    <nav>
+        <a href="student.html">Home</a>
+        <a href="submiit.html">Submit</a>
+        <a href="track.html" style="color:#1E88E5; font-weight:700;">Track</a>
+        <a href="login.html">Login</a>
+    </nav>
+</header>
+
+<!-- TRACK SECTION -->
+<section class="track-section">
+    <div class="track-header">
+        <h2>Track Your Grievance</h2>
+        <p>Enter your unique Grievance ID or details below to check the real-time status and view faculty feedback.</p>
+    </div>
+
+    <div class="track-box">
+        <form id="trackForm">
+            <input type="text" id="grievanceIDInput" placeholder="Enter Grievance ID, Name, or Roll No." required>
+            <button type="submit">Track Status</button>
+        </form>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    © Fr.Conceicao Rodrigues College of Engineering 2026  | FRCRCE@edu.in | +91 9876543210
+</footer>
+
+<script src="script.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const trackForm = document.getElementById('trackForm');
+    if (trackForm) {
+        trackForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            trackGrievance();
+        });
+    }
+});
+</script>
+
+</body>
+</html>

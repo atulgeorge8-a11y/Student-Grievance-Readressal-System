@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Grievance Redressal System</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Inter', sans-serif;
+    background:#f4f8fc;
+    color:#333;
+}
+
+/* NAVBAR */
+header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 8%;
+    background:white;
+    box-shadow:0 4px 15px rgba(0,0,0,0.05);
+    position:sticky;
+    top:0;
+}
+
+.logo{
+    font-family:'Poppins', sans-serif;
+    font-size:22px;
+    color:#1E88E5;
+    font-weight:600;
+}
+
+nav a{
+    margin-left:25px;
+    text-decoration:none;
+    color:#333;
+    font-weight:500;
+    transition:0.3s;
+}
+
+nav a:hover{
+    color:#1E88E5;
+}
+
+/* HERO SECTION */
+.hero{
+    text-align:center;
+    padding:90px 20px;
+    background:linear-gradient(135deg,#1E88E5,#1565C0);
+    color:white;
+}
+
+.hero h1{
+    font-family:'Poppins', sans-serif;
+    font-size:42px;
+    margin-bottom:20px;
+}
+
+.hero p{
+    font-size:18px;
+    margin-bottom:30px;
+    max-width:600px;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.btn{
+    padding:12px 28px;
+    border-radius:8px;
+    border:none;
+    cursor:pointer;
+    font-weight:500;
+    transition:0.3s;
+    text-decoration:none;
+    display:inline-block;
+    margin:5px;
+}
+
+.primary{
+    background:white;
+    color:#1E88E5;
+}
+
+.primary:hover{
+    background:#e3f2fd;
+    transform:translateY(-2px);
+}
+
+.secondary{
+    background:transparent;
+    border:2px solid white;
+    color:white;
+}
+
+.secondary:hover{
+    background:white;
+    color:#1E88E5;
+    transform:translateY(-2px);
+}
+
+/* FEATURES */
+.features{
+    display:flex;
+    justify-content:center;
+    gap:30px;
+    padding:70px 8%;
+    flex-wrap:wrap;
+}
+
+.card{
+    background:white;
+    padding:30px;
+    width:300px;
+    border-radius:12px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.05);
+    text-align:center;
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:translateY(-8px);
+}
+
+.card h3{
+    font-family:'Poppins', sans-serif;
+    margin-bottom:15px;
+    color:#1E88E5;
+}
+
+.card p{
+    color:#666;
+    line-height:1.6;
+}
+
+/* LOGIN SECTION */
+.login-section{
+    padding:70px 8%;
+    background:white;
+}
+
+.login-section h2{
+    text-align:center;
+    font-family:'Poppins', sans-serif;
+    margin-bottom:50px;
+    color:#1E88E5;
+}
+
+.login-options{
+    display:flex;
+    justify-content:center;
+    gap:30px;
+    flex-wrap:wrap;
+    max-width:1200px;
+    margin:auto;
+}
+
+.login-box{
+    background:#f4f8fc;
+    padding:40px;
+    width:280px;
+    border-radius:12px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.05);
+    text-align:center;
+    transition:0.3s;
+}
+
+.login-box:hover{
+    transform:translateY(-8px);
+    box-shadow:0 15px 35px rgba(0,0,0,0.1);
+}
+
+.login-box h3{
+    font-family:'Poppins', sans-serif;
+    margin-bottom:20px;
+    color:#1E88E5;
+    font-size:20px;
+}
+
+.login-box p{
+    color:#666;
+    margin-bottom:20px;
+    font-size:14px;
+}
+
+.login-box a{
+    display:inline-block;
+    padding:10px 20px;
+    background:#1E88E5;
+    color:white;
+    text-decoration:none;
+    border-radius:8px;
+    font-weight:500;
+    transition:0.3s;
+}
+
+.login-box a:hover{
+    background:#1565C0;
+}
+
+/* FOOTER */
+footer{
+    background:#1E88E5;
+    color:white;
+    text-align:center;
+    padding:30px;
+    margin-top:60px;
+}
+
+footer p{
+    margin:5px 0;
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+    nav{
+        display:none;
+    }
+    
+    .hero h1{
+        font-size:28px;
+    }
+    
+    .hero p{
+        font-size:16px;
+    }
+    
+    .features, .login-options{
+        flex-direction:column;
+        align-items:center;
+    }
+    
+    .card, .login-box{
+        width:100%;
+        max-width:400px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<header>
+    <div class="logo">🎓 SGRS</div>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="#features">Features</a>
+        <a href="#login">Login</a>
+        <a href="#contact">Contact</a>
+    </nav>
+</header>
+
+<!-- HERO SECTION -->
+<section class="hero">
+    <h1>Student Grievance Redressal System</h1>
+    <p>A transparent and secure platform for students to submit, track, and resolve their concerns efficiently with institutional support.</p>
+    <a href="student.html" class="btn primary">Student Login</a>
+    <a href="#login" class="btn secondary">Other Roles</a>
+</section>
+
+<!-- FEATURES SECTION -->
+<section class="features" id="features">
+    <div class="card">
+        <h3>📝 Easy Submission</h3>
+        <p>Submit your grievances quickly through a simple and intuitive form. Anonymous submission is also available.</p>
+    </div>
+    <div class="card">
+        <h3>🔒 Secure & Confidential</h3>
+        <p>Your grievances are handled with complete privacy. Only authorized personnel have access to your information.</p>
+    </div>
+    <div class="card">
+        <h3>🔍 Real-Time Tracking</h3>
+        <p>Track the progress of your complaint anytime using your Grievance ID. Get instant status updates.</p>
+    </div>
+</section>
+
+<!-- LOGIN SECTION -->
+<section class="login-section" id="login">
+    <h2>Login to Your Portal</h2>
+    
+    <div class="login-options">
+        <div class="login-box">
+            <h3>👨‍🎓 Student</h3>
+            <p>Submit and track your grievances</p>
+            <a href="student.html">Student Login</a>
+        </div>
+        
+        <div class="login-box">
+            <h3>👨‍🏫 Faculty</h3>
+            <p>Manage assigned grievances</p>
+            <a href="login.html">Faculty Login</a>
+        </div>
+        
+        <div class="login-box">
+            <h3>👔 HOD</h3>
+            <p>Monitor department grievances</p>
+            <a href="HOD.html">HOD Login</a>
+        </div>
+        
+        <div class="login-box">
+            <h3>👨‍💼 Principal</h3>
+            <p>View institutional statistics</p>
+            <a href="Principal.html">Principal Login</a>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="contact">
+    <p>© 2026 Student Grievance Redressal System</p>
+    <p>Fr. Conceicao Rodrigues College of Engineering</p>
+    <p>Email: grievance@frcrce.ac.in | Phone: +91 9876543210</p>
+</footer>
+
+<script src="script.js"></script>
+
+</body>
+</html>
