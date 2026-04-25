@@ -3,149 +3,252 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Student Dashboard</title>
+<title>Student Dashboard | SGRS</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-body{
-    font-family:'Inter', sans-serif;
-    background:#f4f8fc;
-    color:#333;
+body {
+    font-family: 'Inter', sans-serif;
+    background: #f4f7fa;
+    color: #333;
+    min-height: 100vh;
 }
 
 /* NAVBAR */
-.navbar{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:20px 8%;
-    background:white;
-    box-shadow:0 4px 15px rgba(0,0,0,0.05);
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 5%;
+    background: white;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
-.logo{
-    font-family:'Poppins', sans-serif;
-    font-size:20px;
-    color:#1E88E5;
+.logo {
+    font-family: 'Poppins', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #1E88E5;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
-nav a{
-    margin-left:25px;
-    text-decoration:none;
-    color:#333;
-    font-weight:500;
-    transition:0.3s;
+nav a {
+    margin-left: 25px;
+    text-decoration: none;
+    color: #555;
+    font-weight: 500;
+    transition: 0.3s;
 }
 
-nav a:hover{
-    color:#1E88E5;
+nav a:hover {
+    color: #1E88E5;
 }
 
-/* WELCOME SECTION */
-.welcome{
-    padding:40px 8%;
+.logout-btn {
+    background: #ffebee;
+    color: #d32f2f;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: 600;
 }
 
-.welcome h2{
-    font-family:'Poppins', sans-serif;
-    color:#1E88E5;
+.logout-btn:hover {
+    background: #ffcdd2;
+    color: #b71c1c;
 }
 
-/* STATUS CARDS */
-.status-section{
-    padding:20px 8%;
+/* MAIN LAYOUT */
+.dashboard-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
 }
 
-.status-cards{
-    display:flex;
-    gap:20px;
-    flex-wrap:wrap;
+/* WELCOME HEADER */
+.welcome-card {
+    background: linear-gradient(135deg, #1E88E5 0%, #1565C0 100%);
+    border-radius: 20px;
+    padding: 40px;
+    color: white;
+    margin-bottom: 40px;
+    box-shadow: 0 15px 35px rgba(30, 136, 229, 0.2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
 }
 
-.card{
-    flex:1;
-    min-width:200px;
-    padding:25px;
-    border-radius:12px;
-    color:white;
-    font-weight:600;
-    box-shadow:0 8px 20px rgba(0,0,0,0.05);
+.welcome-card::after {
+    content: '';
+    position: absolute;
+    right: -50px;
+    top: -100px;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+    border-radius: 50%;
 }
 
-.pending{ background:#e53935; }
-.progress{ background:#fb8c00; }
-.resolved{ background:#43a047; }
+.welcome-text h2 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.welcome-text p {
+    font-size: 16px;
+    opacity: 0.9;
+    max-width: 600px;
+}
+
+.quick-actions {
+    display: flex;
+    gap: 15px;
+    position: relative;
+    z-index: 2;
+}
+
+.action-btn {
+    padding: 12px 24px;
+    background: white;
+    color: #1E88E5;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.action-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+}
+
+.action-btn.secondary {
+    background: rgba(255,255,255,0.1);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.3);
+}
+
+.action-btn.secondary:hover {
+    background: rgba(255,255,255,0.2);
+}
 
 /* TABLE SECTION */
-.table-section{
-    padding:40px 8%;
+.table-wrapper {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.03);
 }
 
-.table-section h3{
-    font-family:'Poppins', sans-serif;
-    margin-bottom:20px;
+.table-wrapper h3 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 24px;
+    margin-bottom: 25px;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
-table{
-    width:100%;
-    border-collapse:collapse;
-    background:white;
-    border-radius:12px;
-    overflow:hidden;
-    box-shadow:0 10px 25px rgba(0,0,0,0.05);
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 10px;
 }
 
-th, td{
-    padding:15px;
-    text-align:center;
+th {
+    text-align: left;
+    padding: 15px 20px;
+    color: #666;
+    font-weight: 600;
+    border-bottom: 2px solid #f0f0f0;
 }
 
-th{
-    background:#1E88E5;
-    color:white;
+td {
+    padding: 20px;
+    background: #fafcff;
 }
 
-tr:nth-child(even){
-    background:#f2f6fc;
+tr td:first-child {
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
 }
 
-/* BUTTON */
-.btn{
-    padding:6px 12px;
-    background:#1E88E5;
-    color:white;
-    border:none;
-    border-radius:6px;
-    cursor:pointer;
+tr td:last-child {
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
 }
 
-.btn:hover{
-    background:#1565C0;
+tbody tr {
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+tbody tr:hover {
+    transform: scale(1.01);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
 }
 
 /* RESPONSIVE */
-@media(max-width:768px){
-    nav{
-        display:none;
+@media(max-width: 900px) {
+    .welcome-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 25px;
     }
-
-    .status-cards{
-        flex-direction:column;
-    }
-
-    table{
-        font-size:14px;
+    
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
     }
 }
 
+@media(max-width: 600px) {
+    .navbar {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .quick-actions {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .action-btn {
+        text-align: center;
+    }
+}
 </style>
 </head>
 
@@ -153,67 +256,69 @@ tr:nth-child(even){
 
 <!-- NAVBAR -->
 <header class="navbar">
-    <div class="logo">Fr.Coneicao Rodrigues College of Engineering</div>
+    <div class="logo">🎓 SGRS Dashboard</div>
     <nav>
-        <a href="student.html">Home</a>
-        <a href="submiit.html">Submit Grievance</a>
-        <a href="track.html">Track Grievance</a>
-        <a href="#" onclick="logout(); return false;">Logout</a>
+        <a href="index.html">Home</a>
+        <a href="submiit.html">Submit</a>
+        <a href="track.html">Track</a>
+        <a href="#" class="logout-btn" onclick="logout(); return false;">Logout</a>
     </nav>
 </header>
 
-<!-- WELCOME -->
-<section class="welcome">
-    <h2>Welcome to Your Dashboard 👋</h2>
-    <p>Here you can view and track your submitted grievances.</p>
-</section>
+<div class="dashboard-container">
+    <!-- WELCOME CARD -->
+    <section class="welcome-card">
+        <div class="welcome-text">
+            <h2>Welcome, Student 👋</h2>
+            <p>Track the progress of your submitted grievances. If an issue has been resolved, you can click on "View Feedback" to see the remarks left by the concerned faculty.</p>
+        </div>
+        <div class="quick-actions">
+            <a href="submiit.html" class="action-btn">📝 New Grievance</a>
+        </div>
+    </section>
 
-<!-- QUICK ACTIONS -->
-<section class="status-section">
-    <div class="status-cards">
-        <a href="submiit.html" class="btn" style="padding:15px 30px; text-decoration:none; background:#1E88E5; color:white; border-radius:8px; display:inline-block; margin:5px;">📝 Submit New Grievance</a>
-        <a href="track.html" class="btn" style="padding:15px 30px; text-decoration:none; background:#1E88E5; color:white; border-radius:8px; display:inline-block; margin:5px;">🔍 Track Grievance</a>
-    </div>
-</section>
-
-<!-- TABLE -->
-<section class="table-section">
-    <h3>Your Grievances</h3>
-    <table>
-        <thead>
-            <tr>
-                <th>Grievance ID</th>
-                <th>Title</th>
-                <th>Category</th>
-                <th>Status</th>
-                <th>Date</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td colspan="5" style="text-align:center; padding:20px;">Loading...</td>
-            </tr>
-        </tbody>
-    </table>
-</section>
+    <!-- TABLE -->
+    <section class="table-wrapper">
+        <h3>📋 My Lodged Grievances</h3>
+        <div style="overflow-x:auto;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Grievance ID</th>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Status</th>
+                        <th>Date Submitted</th>
+                        <th>Faculty Review</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="6" style="text-align:center; padding:30px;">Loading your grievances...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</div>
 
 <script src="script.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const currentUser = getCurrentUser();
-    if (!currentUser) {
-        alert('Please login first');
+    if (!currentUser || currentUser.role !== 'student') {
+        alert('Please login as a student first.');
         window.location.href = 'student.html';
         return;
     }
     
-    // Update welcome message
-    const welcome = document.querySelector('.welcome h2');
+    // Update welcome message dynamically with Name
+    const welcome = document.querySelector('.welcome-text h2');
     if (welcome) {
-        welcome.textContent = `Welcome to Your Dashboard 👋`;
+        welcome.innerHTML = `Welcome back, <span style="color: #bbdefb;">${currentUser.name || currentUser.rollNumber}</span> 👋`;
     }
     
-    // Display grievances
+    // Fetch and display student's specific grievances
     displayStudentGrievances();
 });
 </script>

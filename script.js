@@ -107,10 +107,10 @@ function updateGrievanceStatus(id, newStatus) {
     return false;
 }
 
-// Get grievances by student (email)
-function getStudentGrievances(studentEmail) {
+// Get grievances by student (rollNumber)
+function getStudentGrievances(rollNumber) {
     const grievances = getAllGrievances();
-    return grievances.filter(g => g.email === studentEmail);
+    return grievances.filter(g => g.rollNumber === rollNumber);
 }
 
 // Get statistics for Principal Dashboard
@@ -174,8 +174,9 @@ function highlightActiveNav() {
 // Predefined credentials (for demonstration)
 const credentials = {
     student: [
-        { email: 'student@example.com', password: 'student123' },
-        { email: 'john@example.com', password: 'pass123' }
+        { rollNumber: '21IT001', password: 'student123', name: 'John Doe' },
+        { rollNumber: '21IT035', password: 'pass123', name: 'Jane Smith' },
+        { rollNumber: 'DEMO', password: 'demo', name: 'Demo Student' }
     ],
     faculty: [
         { email: 'academic@faculty.com', password: 'pass123', category: 'Academic' },
@@ -251,51 +252,40 @@ function loginUser(role) {
 function loginStudent() {
     console.log('loginStudent called');
     
-    const emailInput = document.getElementById('studentEmailInput');
+    const rollInput = document.getElementById('studentRollInput');
     const passwordInput = document.getElementById('studentPasswordInput');
     
-    console.log('Student emailInput:', emailInput);
-    console.log('Student passwordInput:', passwordInput);
-    
-    if (!emailInput || !passwordInput) {
+    if (!rollInput || !passwordInput) {
         console.error('Student input fields not found');
         alert('Error: Input fields not found. Please refresh the page.');
         return;
     }
 
-    const email = emailInput.value.trim();
+    const loginIdentifier = rollInput.value.trim().toUpperCase();
     const password = passwordInput.value.trim();
 
-    console.log('Student email entered:', email);
-    console.log('Student password entered:', password);
-
-    if (!email || !password) {
-        alert('Please enter both email and password');
+    if (!loginIdentifier || !password) {
+        alert('Please enter both Roll Number/Name and password');
         return;
     }
 
-    console.log('Available student credentials:', credentials['student']);
-
     const validCredentials = credentials['student'];
-    console.log('Valid credentials array:', validCredentials);
 
-    const isValid = validCredentials && validCredentials.some(cred => {
-        console.log('Checking student:', cred.email, '===', email, '&&', cred.password, '===', password);
-        return cred.email === email && cred.password === password;
+    const matchedUser = validCredentials && validCredentials.find(cred => {
+        return (cred.rollNumber.toUpperCase() === loginIdentifier || cred.name.toUpperCase() === loginIdentifier) && cred.password === password;
     });
 
-    console.log('Student login valid:', isValid);
-
-    if (isValid) {
+    if (matchedUser) {
         // Store login info in sessionStorage
-        sessionStorage.setItem('currentUser', JSON.stringify({ email, role: 'student' }));
+        const rollNumber = matchedUser.rollNumber;
+        sessionStorage.setItem('currentUser', JSON.stringify({ rollNumber, name: matchedUser.name, role: 'student' }));
         console.log('Student login successful, redirecting...');
         
         // Redirect to dashboard
         window.location.href = 'Spage.html';
     } else {
         console.error('Student login failed - invalid credentials');
-        alert('Invalid Login. Please check your email and password.\n\nTry:\nEmail: student@example.com\nPassword: student123\n\nOr:\nEmail: john@example.com\nPassword: pass123');
+        alert('Invalid Login. Please check your Roll Number/Name and password.\n\nTry:\nRoll Number: DEMO\nPassword: demo');
     }
 }
 
@@ -325,14 +315,22 @@ function submitGrievance() {
     if (!form) return;
 
     // Get form values using IDs
-    const name = document.getElementById('studentName')?.value?.trim() || '';
-    const rollNumber = document.getElementById('rollNumber')?.value?.trim() || '';
+    const currentUser = getCurrentUser();
+    let name = document.getElementById('studentName')?.value?.trim() || '';
+    let rollNumber = document.getElementById('rollNumber')?.value?.trim() || '';
     const title = document.getElementById('grievanceTitle')?.value?.trim() || '';
     const category = document.getElementById('grievanceCategory')?.value?.trim() || '';
     const description = document.getElementById('grievanceDescription')?.value?.trim() || '';
     const department = document.getElementById('grievanceDepartment')?.value?.trim() || 'General';
     const isAnonymous = document.getElementById('anonymousCheck')?.checked || false;
-    const email = isAnonymous ? 'anonymous@system.com' : (getCurrentUser()?.email || 'student@example.com');
+    let email = isAnonymous ? 'anonymous@system.com' : (currentUser?.email || 'student@example.com');
+
+    // Force current logged in student details to ensure it shows up in their dashboard
+    if (currentUser && currentUser.role === 'student' && !isAnonymous) {
+        name = currentUser.name || name;
+        rollNumber = currentUser.rollNumber || rollNumber;
+        email = currentUser.email || email;
+    }
 
     // Validation
     if (!isAnonymous) {
@@ -490,27 +488,38 @@ function createTrackResultDiv() {
 
 function displayStudentGrievances() {
     const currentUser = getCurrentUser();
-    if (!currentUser) return;
+    if (!currentUser || currentUser.role !== 'student') return;
 
-    const grievances = getStudentGrievances(currentUser.email);
+    const grievances = getStudentGrievances(currentUser.rollNumber);
     const tableBody = document.querySelector('table tbody');
     
     if (!tableBody) return;
 
     if (grievances.length === 0) {
-        tableBody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:20px;">No grievances submitted yet</td></tr>';
+        tableBody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:20px;">No grievances submitted yet</td></tr>';
         return;
     }
 
-    tableBody.innerHTML = grievances.map(g => `
+    tableBody.innerHTML = grievances.map(g => {
+        let statusStyle = '';
+        if(g.status === 'Pending') statusStyle = 'color: #e53935; font-weight: bold;';
+        if(g.status === 'In Progress') statusStyle = 'color: #fb8c00; font-weight: bold;';
+        if(g.status === 'Resolved') statusStyle = 'color: #43a047; font-weight: bold;';
+
+        return `
         <tr>
-            <td>${g.grievanceID}</td>
+            <td style="font-weight: 500;">${g.grievanceID}</td>
             <td>${g.title}</td>
             <td>${g.category}</td>
-            <td>${g.status}</td>
+            <td style="${statusStyle}">${g.status}</td>
             <td>${g.submittedDate}</td>
+            <td>
+                ${g.status === 'Resolved' && g.facultyFeedback ? 
+                  `<button class="btn" style="background:#43a047; font-size: 13px;" onclick="showCustomModal('Faculty Review for ${g.grievanceID}', '<p>${g.facultyFeedback.replace(/'/g, '&apos;')}</p>')">View Feedback</button>` 
+                  : `<span style="color: #999; font-size: 13px; font-style: italic;">N/A</span>`}
+            </td>
         </tr>
-    `).join('');
+    `}).join('');
 }
 
 // ============================================================
@@ -1115,21 +1124,21 @@ function initChatbot() {
             if (typingMsg) typingMsg.remove();
 
             if (data.error) {
-                // Graceful fallback if no API key
-                handleLocalResponse(text);
-            } else {
-                let botText = data.reply.replace(/\n/g, '<br>');
-                botText = botText.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
-                appendMessage('bot', botText, true);
-            }
-        } catch (err) {
-            const typingMsg = document.getElementById(typingId);
-            if (typingMsg) typingMsg.remove();
-            handleLocalResponse(text);
-        }
+        	        // Graceful fallback if no API key
+        	        handleLocalResponse(text, data.error);
+        	    } else {
+        	        let botText = data.reply.replace(/\n/g, '<br>');
+        	        botText = botText.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
+        	        appendMessage('bot', botText, true);
+        	    }
+        	} catch (err) {
+        	    const typingMsg = document.getElementById(typingId);
+        	    if (typingMsg) typingMsg.remove();
+        	    handleLocalResponse(text, err.message);
+        	}
     }
 
-    function handleLocalResponse(text) {
+    function handleLocalResponse(text, errorMsg = '') {
         const lowerText = text.toLowerCase();
         if (lowerText.includes('submit') || lowerText.includes('new') || lowerText.includes('create')) {
             appendMessage('bot', 'To submit a grievance, go to the Submit page, fill in your details (or submit anonymously), choose a category, and describe your issue.<br><br><a href="submiit.html" class="chat-action-link">Submit a Grievance ➔</a>', true);
@@ -1140,7 +1149,11 @@ function initChatbot() {
         } else if (lowerText.includes('contact') || lowerText.includes('admin')) {
             appendMessage('bot', 'You can contact the admin by raising a General Grievance and addressing it to the Principal.', true);
         } else {
-            appendMessage('bot', "I'm currently in local mode because my Gemini AI API Key isn't set up yet! 😕<br><br><b>To answer ANY questions</b>, please add your Gemini API key to the <code>.env</code> file.<br><br>For now, ask me basic things like: <i>submitting, tracking, passwords, or contacting admin!</i>", true);
+            let errorFeedback = '';
+            if (errorMsg && typeof errorMsg === 'string' && errorMsg.includes('leaked')) {
+                errorFeedback = '<br><br><b style="color:#d32f2f;">Critical Error: Your Gemini API Key was reported as leaked and has been blocked. You MUST replace it in the .env file!</b>';
+            }
+            appendMessage('bot', "I'm currently in local mode because my Gemini AI API Key isn't working properly! 😕" + errorFeedback + "<br><br>For now, ask me basic things like: <i>submitting, tracking, passwords, or contacting admin!</i>", true);
         }
     }
 

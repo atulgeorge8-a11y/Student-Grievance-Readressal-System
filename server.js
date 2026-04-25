@@ -21,8 +21,8 @@ app.post('/api/chat', async (req, res) => {
 
         const apiKey = process.env.GEMINI_API_KEY;
         if (!apiKey || apiKey === 'YOUR_API_KEY_HERE') {
-            return res.status(500).json({ 
-                error: 'API Key not configured. Please add your Gemini API key to the .env file.' 
+            return res.status(500).json({
+                error: 'API Key not configured. Please add your Gemini API key to the .env file.'
             });
         }
 
@@ -39,8 +39,8 @@ Use EXACTLY the following formats for the portal links:
 
 Use standard Markdown for bolding (**bold**). DO NOT wrap your response in markdown code blocks. Here is the user's message:\n`;
 
-        
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
+
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -49,14 +49,14 @@ Use standard Markdown for bolding (**bold**). DO NOT wrap your response in markd
         });
 
         const data = await response.json();
-        
+
         if (!response.ok) {
             console.error('Gemini API Error:', data);
             throw new Error(data.error?.message || 'Failed to fetch response from AI');
         }
 
         const botReply = data.candidates?.[0]?.content?.parts?.[0]?.text || "I'm sorry, I couldn't formulate a response.";
-        
+
         res.json({ reply: botReply });
     } catch (error) {
         console.error('Chat API Error:', error.message);
@@ -74,3 +74,5 @@ app.listen(PORT, () => {
     console.log(`Server is running at http://localhost:${PORT}`);
     console.log(`Press Ctrl+C to stop.`);
 });
+
+module.exports = app;
